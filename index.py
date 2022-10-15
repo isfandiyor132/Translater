@@ -80,7 +80,6 @@ def translate_page():
     words_info = [words_info[0], words_info[1] + len(words)]
     data = [result, origin, from_lang, to_lang]
     return redirect(url_for('.main_page', messages=data))
-    # return render_template('index.html', languages=googletrans.LANGUAGES, result=result, origin=origin, from_lang=from_lang, to_lang=to_lang, user_data=user_data, words_info=words_info)
 
 @app.route('/login')
 def login():
