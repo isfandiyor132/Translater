@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://kit.fontawesome.com/6716bb5833.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <form action="translate" method="POST">
+        <div class="wrapper">
+            <select value="{{from_lang}}" name="from_lang" id="from_lang">
+                <option value="DETECT LANGUAGE">DETECT LANGUAGE</option>
+                {% for i in languages %}
+                    <option value="{{i}}">{{languages[i].upper()}}</option>
+                {% endfor %}
+            </select>
+            <h3>>>></h3>
+            <select name="to_lang" id="to_lang">
+                {% for i in languages %}
+                    <option value="{{i}}">{{languages[i].upper()}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="wrapper">
+            <textarea name="text" placeholder="Enter your text: ">{{origin}}</textarea>
+            <div class="btn_block">
+                <button type="submit" class="btn translate_btn"><i class="fas fa-arrow-right"></i></button>
+                <div class="btn change_btn" id="change_btn"><i class="fas fa-retweet"></i></div>
+            </div>
+            <textarea placeholder="" readonly>{{result}}</textarea>
+        </div>
+    </form>
+
+    {% if user_data == None %}
+        <form action="/login">
+            <button class="login_btn">LOGIN</button>
+        </form>
+    {% endif %}
+    {% if user_data != None %}
+        <div class="right_btn_block">
+            <form action="/logout">
+                <button class="logout_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> 
+                </button>
+            </form>
+            <h3 class="username">{{user_data.name}}</h3>
+        </div>
+        <div class="left_btn_block">
+            <h3 class="word_block">Monthly Limit: {{words_info[0]}} words</h3>
+            <h3 class="word_block">Words Used: {{words_info[1]}} words</h3>
+            <h3 class="word_block">Words Remaining: {{words_info[0]-words_info[1]}} words</h3>
+        </div>
+    {% endif %}
+
+    {% if from_lang in languages %}
+    <script>
+        document.getElementById("from_lang").value = "{{from_lang}}"
+        document.getElementById("to_lang").value = "{{to_lang}}"
+    </script>
+    {% endif %}
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
